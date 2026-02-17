@@ -2,7 +2,6 @@
 /*
 Plugin Name: x402 Agent Gateway
 Plugin URI: https://x402.com
-Description: Connects your WooCommerce store to the x402 Agent Payment Gateway. Adds metadata for AI agents and enables x402 payments.
 Version: 0.0.0
 Author: x402 Team
 Author URI: https://x402.com
