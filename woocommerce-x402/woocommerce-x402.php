@@ -2,7 +2,7 @@
 /*
 Plugin Name: x402 Agent Gateway
 Plugin URI: https://x402.com
-Version: 1.0.0
+Version: 1.0.1
 Author: x402 Team
 Author URI: https://x402.com
 License: MIT
