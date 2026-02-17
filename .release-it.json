@@ -3,7 +3,10 @@
         "commitMessage": "chore: release v${version}",
         "tagName": "v${version}",
         "requireCleanWorkingDir": false,
-        "add": false
+        "add": [
+            "package.json",
+            "woocommerce-x402/woocommerce-x402.php"
+        ]
     },
     "github": {
         "release": true,
@@ -15,7 +18,7 @@
         "publish": false
     },
     "hooks": {
-        "after:bump": "node scripts/bump-version.js ${version} && ./scripts/pack-plugin.sh && git add package.json woocommerce-x402/woocommerce-x402.php"
+        "after:bump": "node scripts/bump-version.js ${version} && ./scripts/pack-plugin.sh"
     },
     "plugins": {}
 }
