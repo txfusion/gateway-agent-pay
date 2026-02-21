@@ -3,7 +3,7 @@
 Plugin Name: x402 Armoris 
 Plugin URI: https://www.armoris.io/
 Description: Connects your WooCommerce store to the x402 Agent Payment Gateway. Adds metadata for AI agents and enables x402 payments.
-Version: 1.1.0
+Version: 1.2.0
 Author: x402 Team
 Author URI: https://www.armoris.io/
 License: MIT
