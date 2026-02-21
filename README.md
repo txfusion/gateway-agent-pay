@@ -22,7 +22,7 @@ This plugin connects your WooCommerce store to the x402 Agent Payment Gateway, e
 2. Click on **x402 Agent Payment**.
 3. Enable the payment method.
 4. Enter your **Store ID** (found in your Agent Gateway Dashboard).
-5. Enter the **Gateway URL** (e.g., `https://gateway.x402.com` or your self-hosted instance).
+5. Enter the **Gateway URL** `http://api.armoris.io/`.
 6. Save changes.
 
 ## Usage
