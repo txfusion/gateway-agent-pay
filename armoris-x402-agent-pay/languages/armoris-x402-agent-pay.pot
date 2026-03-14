@@ -5,7 +5,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Armoris x402 Agent Pay 0.1.2\n"
+"Project-Id-Version: Armoris x402 Agent Pay 0.1.7\n"
 "Report-Msgid-Bugs-To: https://armoris.io\n"
 "POT-Creation-Date: 2026-02-26T08:00:00+01:00\n"
 "MIME-Version: 1.0\n"

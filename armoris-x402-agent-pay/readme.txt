@@ -4,7 +4,7 @@ Tags: woocommerce, payment gateway, ai agent, x402, usdc
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 0.1.6
+Stable tag: 0.1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,8 @@ No. Store context metadata (name, currency, shipping locations, featured product
 x402 is an open protocol for machine-to-machine payments using HTTP. It extends the HTTP 402 "Payment Required" status code to enable autonomous agent commerce. See [x402.org](https://x402.org) for more details.
 
 == Changelog ==
+
+= 0.1.7 - 2026-03-14 =
 
 = 0.1.6 - 2026-03-10 =
 * Minor bug fixes and maintenance.
