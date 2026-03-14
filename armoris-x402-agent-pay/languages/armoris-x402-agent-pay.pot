@@ -37,7 +37,7 @@ msgstr ""
 msgid "https://www.armoris.io/"
 msgstr ""
 
-#: armoris-x402-for-woocommerce.php:89
+#: armoris-x402-agent-pay.php:89
 msgid "Awaiting x402 Agent payment."
 msgstr ""
 
@@ -62,6 +62,6 @@ msgstr ""
 msgid "https://www.armoris.io/"
 msgstr ""
 
-#: woocommerce-x402.php:87
+#: armoris-x402-agent-pay.php:87
 msgid "Awaiting x402 Agent payment."
 msgstr ""

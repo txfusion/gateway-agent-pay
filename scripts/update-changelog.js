@@ -22,7 +22,16 @@ if (!version || !rawChangelog) {
 const PLUGIN_DIR = path.join(__dirname, '../armoris-x402-agent-pay');
 const CHANGELOG_MD = path.join(PLUGIN_DIR, 'CHANGELOG.md');
 const README_TXT = path.join(PLUGIN_DIR, 'readme.txt');
-const README_STABLE = path.join(__dirname, '../readme.txt');
+
+if (!fs.existsSync(CHANGELOG_MD)) {
+    console.error(`Error: ${CHANGELOG_MD} not found.`);
+    process.exit(1);
+}
+
+if (!fs.existsSync(README_TXT)) {
+    console.error(`Error: ${README_TXT} not found.`);
+    process.exit(1);
+}
 
 // ---- Parse lines into categories ----
 const categories = { Added: [], Changed: [], Fixed: [], Removed: [] };
@@ -30,9 +39,12 @@ const categories = { Added: [], Changed: [], Fixed: [], Removed: [] };
 rawChangelog.split('\\n').forEach(line => {
     line = line.trim();
     if (!line) return;
-    const match = line.match(/^(Added|Changed|Fixed|Removed):\s*(.+)$/);
+    const match = line.match(/^(Added|Changed|Fixed|Removed):\s*(.+)$/i);
     if (match) {
-        categories[match[1]].push(match[2]);
+        const type = match[1].charAt(0).toUpperCase() + match[1].slice(1).toLowerCase();
+        if (categories[type]) {
+            categories[type].push(match[2]);
+        }
     }
 });
 
@@ -67,11 +79,22 @@ readmeEntry += '\n';
 
 // Inject AFTER "== Changelog ==" section header
 let readme = fs.readFileSync(README_TXT, 'utf8');
-readme = readme.replace(
-    /(== Changelog ==\n\n)/,
-    `$1${readmeEntry}`
-);
+if (readme.includes('== Changelog ==')) {
+    readme = readme.replace(
+        /(== Changelog ==\n\n)/,
+        `$1${readmeEntry}`
+    );
+}
 // Bump Stable tag
 readme = readme.replace(/^Stable tag: .*/m, `Stable tag: ${version}`);
 fs.writeFileSync(README_TXT, readme);
 console.log(`✅ readme.txt updated with v${version}`);
+
+// ---- Bump .pot file version ----
+const POT_FILE = path.join(PLUGIN_DIR, 'languages/armoris-x402-agent-pay.pot');
+if (fs.existsSync(POT_FILE)) {
+    let pot = fs.readFileSync(POT_FILE, 'utf8');
+    pot = pot.replace(/^"Project-Id-Version: .*\\n"/m, `"Project-Id-Version: Armoris x402 Agent Pay ${version}\\n"`);
+    fs.writeFileSync(POT_FILE, pot);
+    console.log(`✅ ${path.basename(POT_FILE)} updated with v${version}`);
+}

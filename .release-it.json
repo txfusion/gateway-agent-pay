@@ -5,13 +5,16 @@
         "requireCleanWorkingDir": false,
         "add": [
             "package.json",
-            "woocommerce-x402/woocommerce-x402.php"
+            "armoris-x402-agent-pay/armoris-x402-agent-pay.php",
+            "armoris-x402-agent-pay/readme.txt",
+            "armoris-x402-agent-pay/CHANGELOG.md",
+            "armoris-x402-agent-pay/languages/armoris-x402-agent-pay.pot"
         ]
     },
     "github": {
         "release": true,
         "assets": [
-            "woocommerce-x402.zip"
+            "armoris-x402-agent-pay.zip"
         ]
     },
     "npm": {

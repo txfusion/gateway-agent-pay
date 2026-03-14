@@ -8,17 +8,22 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [0.1.6] - 2026-03-10
 
-
+- Minor bug fixes and maintenance.
+- Prepared plugin for WordPress.org review submission.
 
 ## [0.1.3] - 2026-02-26
 
-
+- Improved REST API reliability for agent discovery.
+- Performance optimizations for product catalog fetching.
 
 ## [0.1.2] - 2026-02-25
 
-
+- Fixes for variable product attribute matching.
+- Updated metadata tags for better agent compatibility.
 
 ## [0.1.1] - 2026-02-25
+
+- Minor documentation updates and localized string fixes.
 
 
 

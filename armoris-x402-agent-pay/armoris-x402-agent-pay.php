@@ -24,7 +24,7 @@ function x402_init_gateway_class() {
         return;
     }
 
-    class WC_Gateway_X402 extends WC_Payment_Gateway {
+    class Armoris_WC_Gateway_X402 extends WC_Payment_Gateway {
 
         public function __construct() {
             $this->id = 'x402';
@@ -99,7 +99,7 @@ function x402_init_gateway_class() {
  */
 add_filter( 'woocommerce_payment_gateways', 'x402_add_gateway_class' );
 function x402_add_gateway_class( $methods ) {
-    $methods[] = 'WC_Gateway_X402'; 
+    $methods[] = 'Armoris_WC_Gateway_X402'; 
     return $methods;
 }
 

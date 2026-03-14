@@ -12,25 +12,19 @@ Connect your WooCommerce store to the Armoris x402 Gateway. Let AI agents browse
 
 == Description ==
 
-**Armoris x402 Agent Pay** bridges your WooCommerce store with the emerging AI-agent economy. Using the open [x402 protocol](https://x402.org), autonomous AI agents can discover your store, request price quotes, and settle payments directly on-chain — without human checkout friction.
+**Armoris x402 Agent Pay** allows your WooCommerce store to interact with autonomous AI agents. The plugin acts as a bridge, exposing specific pieces of your store's information to the Armoris Gateway so that AI agents can find products, get pricing, and make payments using the [x402 protocol](https://x402.org).
 
-= How it works =
+**How it works and Data Flow:**
 
-1. Install and activate the plugin.
-2. Connect your store to your [Armoris](https://armoris.io) merchant dashboard.
-3. AI agents discover your store via injected meta tags and interact with the x402 REST endpoints to get quotes and create orders.
-4. Payments are settled on-chain (USDC,...) and your WooCommerce orders are created automatically.
+This plugin creates several secure endpoints on your website. The Armoris Gateway connects to these endpoints to help AI agents shop at your store:
 
-= Features =
+*   **Store Context**: Shares your store's name, currency, and shipping rules so agents know which countries you serve.
+*   **Product Information**: Allows the gateway to see your product list (prices, descriptions, stock) so agents can browse and find items.
+*   **Quote Calculation**: When an agent wants to buy, the gateway sends the items and location to your store. Your store then calculates the exact tax and shipping costs.
+*   **Order Placement**: Once an on-chain payment is verified, the gateway sends the order info and payment proof to your store to create a standard WooCommerce order.
+*   **Order Tracking**: Allows agents to check if their order has been shipped or processed.
 
-* **Agent Discovery**: Injects `x402:store_id`, `x402:gateway_url`, and `x402:context_url` meta tags into your site's `<head>` for AI agent discovery.
-* **Quote Endpoint**: Provides a secure REST endpoint (`POST /wp-json/x402/v1/quote`) so agents can get real-time price quotes including tax and shipping.
-* **Automated Order Creation**: REST endpoint (`POST /wp-json/x402/v1/order`) creates WooCommerce orders when payment is confirmed by the gateway.
-* **Order Status Lookup**: Agents can check order status via `GET /wp-json/x402/v1/order/{id}`.
-* **Product Catalog Access**: Exposes product listings for agent browsing (`GET /wp-json/x402/v1/products`).
-* **Store Context**: Provides store metadata (currency, shipping locations, featured products) to AI agents for informed purchasing decisions.
-* **Client Secret Authentication**: All sensitive endpoints are protected by a shared secret between your store and the Armoris gateway.
-* **Variable Product Support**: Handles variable products with attribute matching for AI agents.
+All communication between the gateway and your store (except for the public store description) is secured using a "Client Secret" that you configure in your dashboard.
 
 = Requirements =
 
@@ -46,6 +40,22 @@ Connect your WooCommerce store to the Armoris x402 Gateway. Let AI agents browse
 4. Enter your **Store ID** and **Client Secret** from your [Armoris Dashboard](https://armoris.io/dashboard).
 5. Set your **Armoris API Gateway URL** (default: `https://api.armoris.io`).
 6. Save settings. Your store is now discoverable by AI agents.
+
+== External services ==
+
+This plugin connects to the **Armoris Gateway API** (`https://api.armoris.io`) to enable AI agents to browse products, request price quotes, and process on-chain USDC payments at your WooCommerce store.
+
+**What data is sent and when:**
+
+* **On plugin activation / page load (public):** Your Store ID and the Armoris Gateway URL are embedded as HTML meta tags in every page of your store's frontend. This allows AI agents to discover your store via the x402 protocol. No authentication is required for this.
+* **When an AI agent browses your store (authenticated):** Your store's name, currency, supported shipping countries, weight/dimension units, and a list of up to 5 featured products (ID, name, SKU, price, image URL) are returned to the Armoris Gateway. This endpoint is secured using your Client Secret.
+* **When an AI agent requests a price quote (authenticated):** The Armoris Gateway sends the agent's requested items (SKU, quantity, attributes) and shipping destination (country, state, postcode, city) to your store. Your store responds with a calculated subtotal, tax, and shipping cost. Secured using your Client Secret.
+* **When an on-chain payment is confirmed (authenticated):** The Armoris Gateway sends the final order details — line items, billing/shipping address, payment method, and on-chain metadata (transaction ID, chain ID, wallet address) — to your store, which creates a standard WooCommerce order. Secured using your Client Secret.
+* **When an AI agent checks an order status (authenticated):** The Armoris Gateway queries your store for the status, totals, line items, billing/shipping address, and on-chain metadata of a specific order. Secured using your Client Secret.
+
+No data is transmitted to the Armoris Gateway itself — all communication is **inbound** from the gateway to your store's REST API endpoints. Your store does not make outbound HTTP requests to Armoris.
+
+This service is provided by Armoris: [Terms of Service](https://armoris.io/terms) | [Privacy Policy](https://armoris.io/privacy).
 
 == Frequently Asked Questions ==
 
@@ -72,25 +82,25 @@ x402 is an open protocol for machine-to-machine payments using HTTP. It extends 
 == Changelog ==
 
 = 0.1.6 - 2026-03-10 =
+* Minor bug fixes and maintenance.
+* Prepared plugin for WordPress.org review submission.
 
 = 0.1.3 - 2026-02-26 =
+* Improved REST API reliability for agent discovery.
+* Performance optimizations for product catalog fetching.
 
 = 0.1.2 - 2026-02-25 =
+* Fixes for variable product attribute matching.
+* Updated metadata tags for better agent compatibility.
 
 = 0.1.1 - 2026-02-25 =
+* Minor documentation updates and localized string fixes.
 
 = 0.1.0 - 2025-02-24 =
-**Added**
-* Agent discovery via `x402:store_id`, `x402:gateway_url`, and `x402:context_url` meta tags injected into `<head>`.
-* Secure REST endpoint `POST /wp-json/x402/v1/quote` for real-time price quotes (cart contents, tax, shipping).
-* REST endpoint `POST /wp-json/x402/v1/order` for automated WooCommerce order creation from AI agents.
-* REST endpoint `GET /wp-json/x402/v1/order/{id}` for agents to poll order and payment status.
-* REST endpoint `GET /wp-json/x402/v1/products` for product catalog browsing by AI agents.
-* REST endpoint `GET /wp-json/x402/v1/context` exposing store metadata (currency, shipping zones, featured products).
-* REST endpoint `GET /wp-json/x402/v1/active-currency` for current store currency.
-* Client Secret (`X-402-Client-Secret` header) authentication on all sensitive endpoints.
-* Variable product support with multi-strategy attribute matching (`attribute_`, `attribute_pa_`, case-insensitive).
-* WooCommerce payment gateway integration under **WooCommerce > Settings > Payments**.
+* Initial release.
+* Support for x402 protocol payments (USDC on Base/SKALE).
+* Secure REST endpoints for Quotes, Orders, and Context.
+* AI Agent discovery via meta tags.
 
 == Upgrade Notice ==
 
@@ -99,4 +109,5 @@ Initial release. No upgrade steps required.
 
 == Privacy Policy ==
 
-This plugin does not store any personal data beyond what WooCommerce itself already handles. Order billing and shipping addresses are stored as part of standard WooCommerce orders. No data is sent to third-party services without merchant configuration (Armoris gateway URL).
+This plugin does not store any personal data beyond what WooCommerce itself already handles. Order billing and shipping addresses are stored as part of standard WooCommerce orders. Data is sent to the Armoris gateway (Store ID, Client Secret) to facilitate machine-to-machine payments as configured in the plugin settings.
+
